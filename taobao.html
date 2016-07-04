@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>淘宝2</title>
+	<style type="text/css">
+	*{padding: 0;margin: 0;}
+	#main{position: relative;}
+	#wrap{width: 300px;height: 200px;border:1px solid black;overflow: hidden;}
+	#pic{width: 1200px;height: 200px;}
+	#pic img{width: 300px;height: 200px;float: left;}
+	#pic #dv{width: 100px;height: 100px;background: rgba(112,112,123,0.5);position: absolute;left:20px;top: 30px;display: none;}
+	#leftshow{float: left;width: 400px;height: 400px;overflow: hidden;position: absolute;left: 300px;top: 0;display: none;}
+	#pict{width: 1200px;height: 800px;}
+	#pict img{width: 1200px;height: 800px;float: left;display: none;}
+	#floor{width: 300px;height: 50px;border:1px solid black;cursor: pointer;}
+	#floor img{width: 75px;height: 50px;/*vertical-align: middle;*/float: left;}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<div id="wrap">
+		<div id="pic">
+			<img src="images/1.jpg" alt="">
+			<img src="images/2.jpg" alt="">
+			<img src="images/3.jpg" alt="">
+			<img src="images/4.jpg" alt="">
+			<div id="dv"></div>
+		</div>
+	</div>
+	<div id="leftshow">
+		<div id="pict">
+			<img src="images/1.jpg" alt="">
+			<img src="images/2.jpg" alt="">
+			<img src="images/3.jpg" alt="">
+			<img src="images/4.jpg" alt="">
+		</div>
+	</div>
+	</div>
+	<div id="floor">
+		<img src="images/1.jpg" alt="">
+		<img src="images/2.jpg" alt="">
+		<img src="images/3.jpg" alt="">
+		<img src="images/4.jpg" alt="">
+	</div>
+</body>
+<script type="text/javascript">
+	var main=document.getElementById("main")
+	console.log(main)
+	var wrap=document.getElementById("wrap");
+	console.log(wrap);
+	var pic=document.getElementById("pic");
+	console.log(pic);
+	var imgs=pic.getElementsByTagName('img');
+	console.log(imgs);
+	var floors=document.getElementById("floor").getElementsByTagName('img')
+	console.log(floors)
+	var dv=document.getElementById("dv");
+	console.log(dv)
+	var leftshow=document.getElementById("leftshow")
+	console.log(leftshow)
+	var pict=document.getElementById("pict")
+	console.log(pict)
+	var leftimgs=pict.getElementsByTagName('img')
+	console.log(leftimgs)
+	
+	
+	for (var i = 0; i < floors.length; i++) {
+		floors[i].onmouseover=function(){
+			for (var j = 0; j < floors.length; j++) {
+				
+
+				if (floors[j]==this) {
+			
+					wrap.scrollLeft=300*j;
+					leftshow.scrollLeft=1200*j;
+					// floors[j].index=j;
+					leftimgs[j].style.display="block"
+					
+					dv.style.left=0+"px";
+					dv.style.top=0+"px";
+					
+				}else{
+					leftimgs[j].style.display="none"
+				}
+				
+			}
+		}
+	}
+	
+		pic.onmousemove=function(e){
+			dv.style.display="block"
+			leftshow.style.display="block";
+		var e=event||window.event;
+		var lefts=e.clientX-pic.offsetLeft-dv.offsetWidth/2;
+		var tops=e.clientY-pic.offsetTop-dv.offsetHeight/2;
+		// console.log(lefts)
+		// console.log(tops)
+		var maxX=wrap.clientWidth-dv.clientWidth;
+		var maxY=wrap.clientHeight-dv.clientHeight;
+		if (lefts<0) {
+			lefts=0;
+		}
+		if (lefts>maxX) {
+			lefts=maxX;
+		};
+		if (tops<0) {
+			tops=0;
+		}
+		if (tops>maxY) {
+			tops=maxY;
+		};
+		dv.style.left=lefts+"px";
+		dv.style.top=tops+"px";
+		num=leftshow.offsetWidth/dv.offsetWidth;
+		console.log(num)
+		
+		leftshow.scrollLeft=lefts*num;
+		leftshow.scrollTop=tops*num;
+			
+			
+	}
+
+	pic.onmouseout=function(){
+		dv.style.display="none";
+		leftshow.style.display="none";
+	}
+</script>
+</html>
